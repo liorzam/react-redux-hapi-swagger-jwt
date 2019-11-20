@@ -1,0 +1,9 @@
+node_modules
+**/*.test.js
+config/local*.yaml
+config/test*.yaml
+artifacts
+.env
+.nyc_output
+.npmrc
+Dockerfile.dev

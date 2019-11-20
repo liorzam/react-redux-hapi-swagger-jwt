@@ -1,0 +1,12 @@
+log:
+  level: LOG_LEVEL
+port: PORT
+security:
+  jwtSecret: SECURITY_JWT_SECRET
+postgres:
+  logging: POSTGRES_LOG
+  port: POSTGRES_PORT
+  host: POSTGRES_HOST
+  database: POSTGRES_DB
+  username: POSTGRES_USER
+  password: POSTGRES_PASSWORD

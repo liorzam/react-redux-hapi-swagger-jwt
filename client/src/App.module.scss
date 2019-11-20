@@ -1,0 +1,104 @@
+.App :global {
+  text-align: center;
+
+  .App-logo {
+    height: 40vmin;
+  }
+
+  .App-header {
+    background-color: #b4c6e9;
+    width: 100%;
+    min-height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+
+  .App-link {
+    color: #09d3ac;
+  }
+
+  .add-new-item-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 60px;
+    margin-left: 30px;
+
+    .ant-btn.ant-btn-primary {
+      width: 150px !important;
+      height: 46px !important;
+      border-radius: 6px !important;
+      font-size: 16px;
+      color: white;
+      background-color: #1689db;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #175ea7;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+  .ant-input-search.ant-input-affix-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    position: relative;
+    .ant-input {
+      width: 100% !important;
+      height: 25px !important;
+      font-size: 16px;
+    }
+    .ant-input-suffix i {
+      color: #96a2aa;
+      display: flex;
+      right: 4px;
+      top: 0;
+      width: 21px;
+      position: absolute;
+      cursor: pointer;
+      &:focus {
+        outline: none;
+      }
+    }
+  }
+
+  .search-item-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 300px;
+    height: 100%;
+  }
+
+  .main-page-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid red;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+
+    nav {
+      width: 50%;
+      height: 100%;
+      border: 1px solid #1415ff;
+    }
+
+    article {
+      width: 50%;
+      height: 100%;
+      border: 1px solid #49ff23;
+    }
+  }
+}

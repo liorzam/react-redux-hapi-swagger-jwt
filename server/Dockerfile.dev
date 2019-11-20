@@ -1,0 +1,31 @@
+FROM node:10.13
+LABEL maintainer "lior@genesort.com"
+
+ARG buildnum
+ARG tag_name
+ARG staging
+
+ENV NODE_ENV $staging
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+COPY package*.json .
+COPY config ./config
+RUN ls /usr/src/app
+RUN echo "registry=http://nexus.internal.genesort/repository/npm-group/ \n \
+            email=devops@genesort.com \n \
+            always-auth=true \n \
+            _auth=Z25zLXJlYWRvbmx5LW5wbXVzZXI6QWExMjM0NTY=" > .npmrc
+RUN npm set progress=false && npm config set depth 0 && npm install --quiet
+COPY . .
+RUN npm run symlink
+
+ENV PORT 8080
+ENV BUILDNUM $buildnum
+ENV TAG_NAME $tag_name
+
+EXPOSE $PORT
+
+RUN npm install -g nodemon
+
+CMD ["npm", "run", "dev"]

@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+  postgres:
+    image: postgres:10.6
+    restart: always
+    ports:
+     - "5432:5432"
+    volumes:
+         - pgdata:/var/lib/postgresql/dataoc
+    # this environment variable - as noted on Docker Hub - will
+    # create a database with this name if it doesnt already exist
+    # when we start out container
+    environment:
+      POSTGRES_DB: database_anyvision_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 30s
+      retries: 3
+  # anyvision:
+  #   build:
+  #     context: ./
+  #     dockerfile: Dockerfile
+  #     target: dev
+  #   command: npm run debug
+  #   volumes:
+  #     - .:/usr/src/app
+  #     # - /usr/src/app/node_modules
+  #   working_dir: /usr/src/app
+  #   environment:
+  #     NODE_ENV: development
+  #     POSTGRES_HOST: postgres
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_PASSWORD: postgres
+  #   ports:
+  #     - "10211:10211"
+  #     - "9229:9229"
+  #   depends_on:
+  #     - postgres
+volumes: 
+     pgdata:

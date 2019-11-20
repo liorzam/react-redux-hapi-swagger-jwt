@@ -1,0 +1,23 @@
+x-swagger-router-controller: login/login
+post:
+  operationId: login
+  tags:
+    - Login
+  security:
+    - loginAuth: []
+  parameters:
+    - in: body
+      required: true
+      name: body
+      description: Login request payload
+      schema:
+        $ref: '#/definitions/LoginRequest'
+  responses:
+    "200":
+      description: Login successfully
+      schema:
+        $ref: '#/definitions/LoginResult'
+    default:
+      description: Login Error
+      schema:
+        $ref: '#/definitions/LoginError'
