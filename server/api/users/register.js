@@ -2,14 +2,19 @@ const Joi = require('@hapi/joi');
 const Boom = require('@hapi/boom');
 const logger = require('lib/logger');
 const userService = require('lib/services/users');
+const { sign } = require('lib/common/security');
+
 
 async function registerHandler(req) {
 	const { email, password, firstName, lastName } = req.payload;
 
 	try {
-		const user = await userService.createNewUser(email, password, { firstName, lastName });
+		const { user } = await userService.createNewUser(email, password, { firstName, lastName });
 
-		return user;
+		return {
+			user,
+			authToken: sign(user),
+		};
 	} catch (err) {
 		logger.error({ err, payload: req.payload }, 'Couldnt register new user');
 		if ('name' in err) {
@@ -27,7 +32,7 @@ async function registerHandler(req) {
 
 const register = {
 	method: 'POST',
-	path: '/users',
+	path: '/api/users',
 	config: {
 		handler: registerHandler,
 		description: 'Register new user',

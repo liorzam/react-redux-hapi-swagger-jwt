@@ -10,7 +10,7 @@ import reducers from "./store/reducers";
 import {watchSaga} from "./store/saga";
 
 const
-  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose,
+  composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose, // for redux plugin
   sagaMiddleware = createSagaMiddleware(),
   middlewares = [sagaMiddleware],
   store = createStore(reducers, composeEnhancers(applyMiddleware(...middlewares)));

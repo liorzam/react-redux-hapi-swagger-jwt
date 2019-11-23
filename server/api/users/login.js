@@ -6,12 +6,15 @@ async function loginHandler(req) {
 
 	const { user } = await loginAsync(email, password);
 
-	return sign(user);
+	return {
+		user,
+		authToken: sign(user),
+	};
 }
 
 const login = {
 	method: 'POST',
-	path: '/login',
+	path: '/api/login',
 	config: {
 		handler: loginHandler,
 		description: 'login',

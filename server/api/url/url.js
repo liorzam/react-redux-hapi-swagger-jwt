@@ -1,20 +1,25 @@
 const Joi = require('@hapi/joi');
-const { User, Url } = require('lib/models');
+const { Url } = require('lib/models');
 
 async function addUrlHandler(req) {
 	const { url } = req.payload;
 
-	return Url.findAll({
-		where: { userId: req.user.id },
-	});
+	const object = {
+		userId: req.user.id,
+		url,
+	};
+
+	const createdUrl = await Url.create(object);
+
+	return createdUrl.get();
 }
 
 const addNewUrl = {
 	method: 'POST',
-	path: '/urls',
+	path: '/api/urls',
 	config: {
 		handler: addUrlHandler,
-		description: 'Adding new url for RTSP Stream',
+		description: 'Adding new RTSP url',
 		notes: 'URL',
 		tags: ['api'],
 		auth: 'jwt',

@@ -4,18 +4,26 @@ const uuid = require('uuid');
 const { hashingPasswordForUser } = require('lib/services/crypto');
 
 const getUser = ({ email = `${uuid()}@anyvision.com`,
+	firstName, lastName,
 	password = uuid() } = {}) => ({
 	email,
 	password,
-	firstName: 'string',
-	lastName: 'string',
+	firstName,
+	lastName,
 });
 
-const emails = ['lior@anyvision.com', 'bar@anyvision.com'];
+const emails = [{ email: 'lior@anyvision.com', firstName: 'Lior', lastName: 'zamir' },
+	{ email: 'bar@anyvision.com', firstName: 'Bar', lastName: 'bitton' }];
 
 module.exports = {
-	up: async () => Promise.all(emails.map(async (email) => {
-		const user = getUser({ email, password: '123456' });
+	up: async () => Promise.all(emails.map(async (item) => {
+		const user = getUser({
+			email: item.email,
+			firstName: item.firstName,
+			lastName: item.lastName,
+			password: '123456',
+		});
+
 		const { salt, hashedPassword } = await hashingPasswordForUser(user.password);
 		return User.create({ ...user, salt, hashedPassword });
 	})),

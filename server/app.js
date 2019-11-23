@@ -7,8 +7,6 @@ const plugins = require('lib/common/plugins');
 const routes = require('./api');
 
 (async () => {
-
-
 	const server = await new Hapi.Server({
 		host: 'localhost',
 		port,
@@ -27,10 +25,10 @@ const routes = require('./api');
 		method: 'GET',
 		path: '/healthcheck',
 		config: {
-			description: 'healthcheck',
+			description: 'health check',
 			notes: 'healthcheck endpoint',
 			tags: ['api'],
-			handler: () =>{},
+			handler: () => {},
 		},
 	});
 
