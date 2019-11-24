@@ -1,15 +1,15 @@
-import types from "../actionsTypes";
+import {LOGIN, AUTH_COMPLETED} from "../actionsTypes";
 
 export const login = data => {
   return{
-    type: types.LOGIN,
+    type: LOGIN,
     payload: data
   };
 }
 
 export const loginSuccess = data => {
     return{
-      type: types.AUTH_COMPLETED,
+      type: AUTH_COMPLETED,
       payload: data
     };
   }

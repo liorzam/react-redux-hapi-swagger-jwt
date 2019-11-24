@@ -1,4 +1,4 @@
-import actionsTypes from '../actionsTypes'
+import { AUTH_COMPLETED } from '../actionsTypes'
 import createReducer from './createReducer'
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 const authReducer = createReducer(initialState, {
-  [actionsTypes.AUTH_COMPLETED]: (state, { payload }) => {
+  [AUTH_COMPLETED]: (state, { payload }) => {
 
     const {user, token} = payload;
 

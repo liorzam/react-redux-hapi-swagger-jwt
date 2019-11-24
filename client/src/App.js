@@ -13,11 +13,16 @@ import UrlForm from "./components/urlForm";
 import RegistrationForm from "./components/registrationForm";
 import LoginForm from "./components/loginForm";
 import Header from "./components/headerComponent";
+import { setToken } from "./api";
 
 class App extends Component {
 
   constructor(props) {
     super(props);
+    const {auth} = props;
+    if(auth && auth.token){
+      setToken(auth.token);
+    }
   }
 
   renderUserName() {
@@ -67,15 +72,9 @@ class App extends Component {
 const mapStateToProps = state => {
   console.log(state);
   return {
-    user: state.auth && state.auth.user,
+    auth: state.auth,
   };
 };
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     fetchItems: () => dispatch(fetchItems())
-//   };
-// }
 
 export default  connect(
     mapStateToProps,

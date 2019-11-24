@@ -1,8 +1,8 @@
 import { call, put } from "redux-saga/effects";
 import {registerSuccess} from "../actions/registerActions";
 import {loginSuccess} from "../actions/loginActions";
-import {addNewUrlSuccess} from "../actions/urlsActions";
-import {registerUserApi, loginUserApi, addNewUrlApi} from "../../api";
+import {addNewUrlSuccess, setUrlsData} from "../actions/urlsActions";
+import {registerUserApi, loginUserApi, addNewUrlApi, getUrlsDataApi} from "../../api";
 
 
 export function* addNewUrlAction(action) {
@@ -56,6 +56,22 @@ export function* loginUserData(action) {
         token: result.data.authToken,
         user: result.data.user,
       }));
+    }
+
+  } catch (error) {
+    console.log("--error: ", error);
+  }
+}
+
+
+export function* getUrlsData(action) {
+  try {
+
+    const result = yield call(getUrlsDataApi, action.payload);
+
+    if(result.status === 200 && result.data){
+      console.log(result.data);
+      yield put(setUrlsData(result.data));
     }
 
   } catch (error) {
