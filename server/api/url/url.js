@@ -1,5 +1,6 @@
 const Joi = require('@hapi/joi');
 const { Url } = require('lib/models');
+const Boom = require('@hapi/boom');
 
 async function addUrlHandler(req) {
 	const { url } = req.payload;
@@ -9,9 +10,17 @@ async function addUrlHandler(req) {
 		url,
 	};
 
-	const createdUrl = await Url.create(object);
+	try {
+		const createdUrl = await Url.create(object);
+		return createdUrl.get();
+	} catch (err) {
+		if ('name' in err
+		&& err.name === 'SequelizeUniqueConstraintError') {
+			return Boom.badRequest('url must be unique');
+		}
 
-	return createdUrl.get();
+		return Boom.wrap(err, 500);
+	}
 }
 
 const addNewUrl = {
@@ -37,4 +46,34 @@ const addNewUrl = {
 	},
 };
 
-module.exports = [addNewUrl];
+
+async function getUrlsHandler(req) {
+	const urls = await Url.findAll({
+		where: {
+			userId: req.user.id,
+		},
+	});
+
+	return urls;
+}
+
+const getUrls = {
+	method: 'GET',
+	path: '/api/urls',
+	config: {
+		handler: getUrlsHandler,
+		description: 'Getting Relevant urls',
+		notes: 'URL',
+		tags: ['api'],
+		auth: 'jwt',
+		validate: {
+			options: {
+				abortEarly: false,
+			},
+			failAction: (request, h, err) => {
+				throw err;
+			},
+		},
+	},
+};
+module.exports = [addNewUrl, getUrls];

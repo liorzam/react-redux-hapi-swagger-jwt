@@ -24,10 +24,10 @@ services:
   #     context: ./
   #     dockerfile: Dockerfile
   #     target: dev
-  #   command: npm run debug
-  #   volumes:
-  #     - .:/usr/src/app
-  #     # - /usr/src/app/node_modules
+  #   command: npm run start
+  #   # volumes:
+  #   #   - .:/usr/src/app
+  #   #   # - /usr/src/app/node_modules
   #   working_dir: /usr/src/app
   #   environment:
   #     NODE_ENV: development
