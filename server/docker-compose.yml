@@ -19,25 +19,25 @@ services:
       interval: 30s
       timeout: 30s
       retries: 3
-  # anyvision:
-  #   build:
-  #     context: ./
-  #     dockerfile: Dockerfile
-  #     target: dev
-  #   command: npm run start
-  #   # volumes:
-  #   #   - .:/usr/src/app
-  #   #   # - /usr/src/app/node_modules
-  #   working_dir: /usr/src/app
-  #   environment:
-  #     NODE_ENV: development
-  #     POSTGRES_HOST: postgres
-  #     POSTGRES_USER: postgres
-  #     POSTGRES_PASSWORD: postgres
-  #   ports:
-  #     - "10211:10211"
-  #     - "9229:9229"
-  #   depends_on:
-  #     - postgres
+  anyvision:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: dev
+    command: npm run start
+    # volumes:
+    #   - .:/usr/src/app
+    #   # - /usr/src/app/node_modules
+    working_dir: /usr/src/app
+    environment:
+      NODE_ENV: development
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "10211:10211"
+      - "9229:9229"
+    depends_on:
+      - postgres
 volumes: 
      pgdata:
