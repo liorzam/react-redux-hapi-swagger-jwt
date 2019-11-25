@@ -1,7 +1,7 @@
 const should = require('should');
 const request = require('supertest');
 const { User: userModel } = require('lib/models');
-const { populateUser } = require('lib/test-helpers/user-helper');
+
 const server = require('../../app');
 
 describe('Login', function () {
@@ -13,13 +13,15 @@ describe('Login', function () {
 
 	describe('POST /login', function () {
 		before(async function () {
-			const { user } = await populateUser();
-			this.user = user;
+			this.user = {
+				email: 'lior@anyvision.com',
+				password: '123456',
+			};
 		});
 
 		it('should login successfully', async function () {
 			const loginResponse = await request(this.server)
-				.post('/login')
+				.post('/api/login')
 				.send({ email: this.user.email, password: this.user.password })
 				.set('Accept', 'application/json')
 				.set('Content-Type', 'application/json')
@@ -27,8 +29,8 @@ describe('Login', function () {
 				.then(res => res.body);
 
 			should(loginResponse).be.an.Object();
-			loginResponse.should.have.property('isFinish').which.is.Boolean();
-			loginResponse.should.have.property('apiKey').which.is.String();
+
+			loginResponse.should.have.property('cd').which.is.String();
 
 			const user = await userModel.findOne({ where: { email: this.user.email } });
 			should(user).be.an.Object();
@@ -40,14 +42,11 @@ describe('Login', function () {
 				password: this.user.password,
 			};
 			const response = await request(this.server)
-				.post('/login')
+				.post('/api/login')
 				.send(payload)
 				.expect(401)
 				.then(res => res.body);
 			should(response).be.an.Object();
-			response.should.have.property('message').which.is.String();
-			response.should.have.property('status').which.is.equal(401);
-			response.should.have.property('code').which.is.equal('WRONG_CREDENTIALS');
 		});
 
 		it('should not login with wrong password', async function () {
@@ -56,14 +55,11 @@ describe('Login', function () {
 				password: '121212',
 			};
 			const response = await request(this.server)
-				.post('/login')
+				.post('/api/login')
 				.send(payload)
 				.expect(401)
 				.then(res => res.body);
 			should(response).be.an.Object();
-			response.should.have.property('message').which.is.String();
-			response.should.have.property('status').which.is.equal(401);
-			response.should.have.property('code').which.is.equal('WRONG_CREDENTIALS');
 		});
 	});
 });
