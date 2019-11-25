@@ -7,9 +7,8 @@ we have api documentation that you can find here: [documentation](http://localho
 ### Server installation:
 ```sh
 cd server
-npm run install
 docker-compose up migrate // should run createDb script which initilaizes the database and populates users data
-docker-compose up 
+docker-compose up anyvision
 ```
 
 #### Users

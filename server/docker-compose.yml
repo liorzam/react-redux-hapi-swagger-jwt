@@ -19,6 +19,8 @@ services:
       interval: 30s
       timeout: 30s
       retries: 3
+    networks:
+    - my-network
   migrate:
     image: anyvision-server
     build:
@@ -27,6 +29,8 @@ services:
       target: dev
     command: npm run createDb
     working_dir: /usr/src/app
+    networks:
+    - my-network
     environment:
       NODE_ENV: development
       POSTGRES_HOST: postgres
@@ -53,7 +57,12 @@ services:
     ports:
       - "10211:10211"
       - "9229:9229"
+    networks:
+    - my-network
     depends_on:
       - postgres
 volumes: 
      pgdata:
+networks:
+  my-network:
+    driver: bridge
