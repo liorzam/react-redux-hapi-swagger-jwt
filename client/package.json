@@ -9,7 +9,7 @@
     "axios": "^0.19.0",
     "babel-loader": "^8.0.6",
     "mui-datatables": "^2.13.0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^7.0.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "react-player": "^1.14.2",
